@@ -1,0 +1,539 @@
+/* ==========================================================================
+   Подготовка к гос.экзамену по Истории Казахстана
+   Mobile-First Stylesheet (Clean Vanilla CSS)
+   ========================================================================== */
+
+:root {
+  --color-primary: #2F6AB5;
+  --color-primary-dark: #235494;
+  --color-primary-light: #4A83CD;
+  --color-primary-pale: #EDF3FB;
+  --color-bg-app: #F8FAFC;
+  --color-bg-white: #FFFFFF;
+  --color-text-main: #1E293B;
+  --color-text-secondary: #475569;
+  --color-text-light: #FFFFFF;
+  --color-border: #D9D9D9;
+  --color-border-subtle: #E2E8F0;
+  --color-overlay: rgba(0, 0, 0, 0.45);
+  
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --max-content-width: 720px;
+  --min-touch-target: 44px;
+  
+  --transition-speed: 250ms;
+  --transition-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 14px rgba(47, 106, 181, 0.25);
+  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+}
+
+/* Reset & Box Sizing */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background-color: #ECEEF2;
+  font-family: var(--font-family);
+  color: var(--color-text-main);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Главный макет (колонка по центру на десктопе, макс. 720px) */
+.app-layout {
+  width: 100%;
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+  min-height: 100vh;
+  min-height: 100dvh;
+  position: relative;
+  background-color: var(--color-bg-white);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Общие стили экранов */
+.screen {
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ==========================================================================
+   ЭКРАН 1: СТАРТОВЫЙ
+   ========================================================================== */
+.screen-start {
+  background-color: var(--color-bg-white);
+  align-items: center;
+  justify-content: center;
+  padding: 32px 24px;
+  padding-top: max(32px, env(safe-area-inset-top));
+  padding-bottom: max(32px, env(safe-area-inset-bottom));
+}
+
+.start-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 480px;
+  margin: auto;
+}
+
+.start-title {
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--color-text-main);
+  margin-bottom: 36px;
+  letter-spacing: -0.3px;
+}
+
+@media (min-width: 480px) {
+  .start-title {
+    font-size: 30px;
+  }
+}
+
+/* Кнопки */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color var(--transition-speed) ease,
+              transform var(--transition-speed) ease,
+              box-shadow var(--transition-speed) ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-text-light);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+.btn-start {
+  min-width: 200px;
+  min-height: var(--min-touch-target);
+  padding: 14px 36px;
+  font-size: 19px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-start:hover {
+  box-shadow: 0 6px 18px rgba(47, 106, 181, 0.35);
+}
+
+/* ==========================================================================
+   ЭКРАН 2: ВОПРОС
+   ========================================================================== */
+.screen-question {
+  position: relative;
+  background-color: var(--color-bg-app);
+}
+
+/* Верхняя панель (Header) */
+.top-bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 16px;
+  padding-top: max(10px, env(safe-area-inset-top));
+  background-color: var(--color-bg-white);
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  z-index: 10;
+  flex-shrink: 0;
+  min-height: 60px;
+}
+
+/* Синяя кнопка-гамбургер */
+.hamburger-btn {
+  width: var(--min-touch-target);
+  height: var(--min-touch-target);
+  min-width: var(--min-touch-target);
+  min-height: var(--min-touch-target);
+  background-color: var(--color-primary);
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 8px;
+  transition: background-color var(--transition-speed) ease,
+              transform var(--transition-speed) ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.hamburger-btn:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.hamburger-btn:active {
+  transform: scale(0.95);
+}
+
+.hamburger-line {
+  display: block;
+  width: 20px;
+  height: 2.5px;
+  background-color: var(--color-text-light);
+  border-radius: 2px;
+}
+
+/* Заголовок в верхней панели (2 строки с многоточием) */
+.top-bar-title {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--color-text-main);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+}
+
+/* Область скролла контента */
+.question-scroll-area {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 20px 16px;
+  background-color: var(--color-bg-white);
+  outline: none;
+}
+
+.question-body {
+  max-width: 100%;
+  font-size: 16.5px;
+  line-height: 1.6;
+  color: var(--color-text-main);
+  word-wrap: break-word;
+}
+
+/* Стилизация текстовых блоков ответа */
+.question-body p {
+  margin-bottom: 16px;
+  text-align: justify;
+}
+
+.question-body h3,
+.question-body .section-heading {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+  margin-top: 22px;
+  margin-bottom: 10px;
+  padding-bottom: 4px;
+  border-bottom: 1.5px solid var(--color-primary-pale);
+}
+
+.question-body .subsection-title {
+  font-weight: 600;
+  color: var(--color-text-main);
+}
+
+.question-body ul,
+.question-body ol {
+  margin-left: 20px;
+  margin-bottom: 16px;
+}
+
+.question-body li {
+  margin-bottom: 8px;
+}
+
+/* Оформление таблиц внутри контента */
+.table-responsive-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 18px 0;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+}
+
+.question-table {
+  width: 100%;
+  min-width: 480px;
+  border-collapse: collapse;
+  font-size: 14.5px;
+  text-align: left;
+}
+
+.question-table th,
+.question-table td {
+  padding: 10px 12px;
+  border: 1px solid var(--color-border-subtle);
+  vertical-align: top;
+}
+
+.question-table th {
+  background-color: var(--color-primary-pale);
+  color: var(--color-primary-dark);
+  font-weight: 600;
+}
+
+.question-table tr:nth-child(even) td {
+  background-color: #F8FAFC;
+}
+
+/* Нижняя панель (Footer) */
+.bottom-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+  background-color: var(--color-bg-white);
+  border-top: 1px solid var(--color-border);
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.04);
+  flex-shrink: 0;
+  z-index: 10;
+}
+
+.nav-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 90px;
+  min-height: var(--min-touch-target);
+  padding: 10px 18px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--color-primary);
+  background-color: var(--color-bg-white);
+  color: var(--color-primary);
+  cursor: pointer;
+  transition: all var(--transition-speed) ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.nav-btn:hover:not(:disabled) {
+  background-color: var(--color-primary);
+  color: var(--color-text-light);
+}
+
+.nav-btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.nav-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  border-color: var(--color-border);
+  color: var(--color-text-secondary);
+}
+
+.nav-btn-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.nav-counter {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  user-select: none;
+}
+
+/* ==========================================================================
+   ЭКРАН 3: МЕНЮ «ВАРИАНТЫ» (ВЫЕЗЖАЮЩИЙ DRAWER)
+   ========================================================================== */
+.drawer-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--color-overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--transition-speed) ease,
+              visibility var(--transition-speed) ease;
+  z-index: 100;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.drawer-backdrop.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Выдвижная синяя панель */
+.drawer-panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 84%;
+  max-width: 380px;
+  background-color: var(--color-primary);
+  color: var(--color-text-light);
+  z-index: 101;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(-100%);
+  transition: transform var(--transition-speed) var(--transition-ease);
+  box-shadow: var(--shadow-lg);
+  padding-top: max(12px, env(safe-area-inset-top));
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+}
+
+.drawer-panel.open {
+  transform: translateX(0);
+}
+
+.drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+  flex-shrink: 0;
+}
+
+.drawer-title {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+}
+
+.drawer-close-btn {
+  background: none;
+  border: none;
+  color: var(--color-text-light);
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  width: var(--min-touch-target);
+  height: var(--min-touch-target);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  transition: background-color var(--transition-speed) ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.drawer-close-btn:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.drawer-list-wrapper {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.drawer-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Строки вариантов */
+.drawer-item {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.drawer-item-btn {
+  width: 100%;
+  min-height: var(--min-touch-target);
+  padding: 14px 20px;
+  background: none;
+  border: none;
+  color: var(--color-text-light);
+  font-family: inherit;
+  font-size: 15px;
+  line-height: 1.4;
+  text-align: left;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+  transition: background-color 150ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.drawer-item-btn:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+.drawer-item-num {
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.95);
+  flex-shrink: 0;
+  min-width: 28px;
+}
+
+.drawer-item-text {
+  flex: 1;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Подсветка текущего вопроса в списке */
+.drawer-item.active .drawer-item-btn {
+  background-color: var(--color-bg-white);
+  color: var(--color-primary-dark);
+  font-weight: 600;
+}
+
+.drawer-item.active .drawer-item-num {
+  color: var(--color-primary-dark);
+}
+
+.drawer-item.active .drawer-item-text {
+  color: var(--color-primary-dark);
+}
+
+/* ==========================================================================
+   Адаптивность и Спец. режимы
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

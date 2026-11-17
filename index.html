@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Подготовка к гос.экзамену по Истории Казахстана</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app-layout" id="app">
+    <!-- ЭКРАН 1: СТАРТОВЫЙ -->
+    <section class="screen screen-start" id="screen-start">
+      <div class="start-content">
+        <h1 class="start-title">Подготовка к гос.экзамену по Истории Казахстана</h1>
+        <button type="button" class="btn btn-primary btn-start" id="btn-start" aria-label="Перейти к вопросам">
+          Перейти
+        </button>
+      </div>
+    </section>
+
+    <!-- ЭКРАН 2: ВОПРОС -->
+    <section class="screen screen-question hidden" id="screen-question" aria-hidden="true">
+      <!-- Верхняя панель -->
+      <header class="top-bar">
+        <button type="button" class="hamburger-btn" id="btn-hamburger" aria-label="Открыть меню вариантов" aria-expanded="false" aria-controls="drawer-panel">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+        <h2 class="top-bar-title" id="question-header-title">№1 Загрузка...</h2>
+      </header>
+
+      <!-- Область контента с ответом -->
+      <main class="question-scroll-area" id="question-scroll-area" tabindex="0">
+        <div class="question-body" id="question-content">
+          <!-- Контент вопроса динамически вставляется из app.js -->
+        </div>
+      </main>
+
+      <!-- Нижняя панель навигации -->
+      <footer class="bottom-bar">
+        <button type="button" class="nav-btn nav-btn-prev" id="btn-prev" aria-label="Предыдущий вопрос">
+          <svg class="nav-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+          <span>Назад</span>
+        </button>
+
+        <span class="nav-counter" id="nav-counter">1 / 30</span>
+
+        <button type="button" class="nav-btn nav-btn-next" id="btn-next" aria-label="Следующий вопрос">
+          <span>Далее</span>
+          <svg class="nav-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </footer>
+    </section>
+
+    <!-- ЭКРАН 3: МЕНЮ «ВАРИАНТЫ» (ВЫЕЗЖАЮЩАЯ СИНЯЯ ПАНЕЛЬ С ЗАТЕМНЕНИЕМ) -->
+    <div class="drawer-backdrop" id="drawer-backdrop" aria-hidden="true"></div>
+    <aside class="drawer-panel" id="drawer-panel" aria-label="Список вариантов" aria-hidden="true">
+      <div class="drawer-header">
+        <h3 class="drawer-title">Варианты</h3>
+        <button type="button" class="drawer-close-btn" id="btn-drawer-close" aria-label="Закрыть меню">
+          &times;
+        </button>
+      </div>
+      <div class="drawer-list-wrapper">
+        <ul class="drawer-list" id="drawer-list" role="list">
+          <!-- Список вопросов генерируется из app.js -->
+        </ul>
+      </div>
+    </aside>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
