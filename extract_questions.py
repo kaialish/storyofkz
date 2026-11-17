@@ -4,7 +4,9 @@ import re
 import json
 import os
 
-docx_path = r'Академический сборник ответов на 40 кейсовых вопросов по Истории Казахстана.docx'
+docx_path = r'Академический сборник ответов на 40 кейсовых вопросов по Истории Казахстана(обновленный).docx'
+if not os.path.exists(docx_path):
+    docx_path = r'Академический сборник ответов на 40 кейсовых вопросов по Истории Казахстана.docx'
 output_json_path = os.path.join('data', 'questions.json')
 
 with zipfile.ZipFile(docx_path) as z:

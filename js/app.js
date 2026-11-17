@@ -186,28 +186,41 @@
         }
       }
 
-      // Проверка на ключевые подзаголовки
-      const sectionMatch = block.match(/^(Краткий ответ|Подробный разбор|Предпосылки|Ход событий|Ход|Итоги|Значение|Личности|Хронология|Таблица сравнения|Вывод|Источник)(\:?)(.*)$/s);
-      
-      if (sectionMatch) {
-        const prefix = sectionMatch[1];
-        const colon = sectionMatch[2] || ':';
-        const rest = sectionMatch[3];
-
-        if (prefix === 'Подробный разбор' || prefix === 'Личности' || prefix === 'Хронология' || prefix === 'Таблица сравнения' || prefix === 'Источник') {
-          htmlParts.push(`<h3 class="section-heading">${escapeHtml(prefix)}</h3>`);
-          if (rest.trim()) {
-            htmlParts.push(`<p>${escapeHtml(rest.trim())}</p>`);
-          }
+      // Проверка на крупные заголовки разделов (H3)
+      const h3Match = block.match(/^(Подробный разбор|Личности|Ключевые личности|Хронология|Таблица сравнения.*|Сравнительная таблица.*|Источник в материалах.*|Источник.*)$/i);
+      if (h3Match) {
+        const fullHeading = h3Match[1].trim();
+        const srcMatch = fullHeading.match(/^(Источник в материалах|Источник)\s*[\:\.]\s*(.+)$/i);
+        if (srcMatch) {
+          htmlParts.push(`<h3 class="section-heading">${escapeHtml(srcMatch[1])}</h3>`);
+          htmlParts.push(`<p class="source-text">${escapeHtml(srcMatch[2].trim())}</p>`);
         } else {
+          htmlParts.push(`<h3 class="section-heading">${escapeHtml(fullHeading.replace(/[\:\.]+$/, ''))}</h3>`);
+        }
+        continue;
+      }
+
+      // Проверка на отдельную строку-подзаголовок (без последующего текста в этом же абзаце)
+      if (/^[A-ZА-ЯЁ«][^:\n]{2,75}\:$/.test(block)) {
+        htmlParts.push(`<h4 class="subsection-subheading">${escapeHtml(block)}</h4>`);
+        continue;
+      }
+
+      // Проверка на структурированный абзац с префиксом-подзаголовком (например «Краткий ответ: ...», «Вывод: ...», «Вклад А. Ермекова: ...»)
+      const colonIndex = block.indexOf(':');
+      if (colonIndex > 1 && colonIndex <= 60 && !block.startsWith('http')) {
+        const prefix = block.substring(0, colonIndex).trim();
+        const rest = block.substring(colonIndex + 1).trim();
+        // Убедимся, что префикс похож на подзаголовок (начинается с заглавной буквы или кавычки и без точек/переводов строк внутри)
+        if (/^[A-ZА-ЯЁ«][^.\n]+$/.test(prefix)) {
           htmlParts.push(`
             <p>
-              <strong class="subsection-title">${escapeHtml(prefix + colon)}</strong>
+              <strong class="subsection-title">${escapeHtml(prefix)}:</strong>
               ${escapeHtml(rest)}
             </p>
           `);
+          continue;
         }
-        continue;
       }
 
       // Обычный абзац текста
